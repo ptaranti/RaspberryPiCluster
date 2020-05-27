@@ -21,4 +21,17 @@ if test -r /etc/default/locale; then
         test -z "${LC_NAME+x}" || export LC_NAME
         test -z "${LC_NUMERIC+x}" || export LC_NUMERIC
         test -z "${LC_PAPER+x}" || export LC_PAPER
-W10: Warning: Changing a readonly file 
+        test -z "${LC_TELEPHONE+x}" || export LC_TELEPHONE
+        test -z "${LC_TIME+x}" || export LC_TIME
+        test -z "${LOCPATH+x}" || export LOCPATH
+fi
+
+if test -r /etc/profile; then
+        . /etc/profile
+fi
+
+test -x /etc/X11/Xsession && exec /etc/X11/Xsession
+exec /bin/sh /etc/X11/Xsession
+
+# added to enable remote desktop access
+startxfce4
