@@ -118,34 +118,29 @@ fi
 
 
 
-# functions  for the cluster management
+####### functions  for the cluster management
 
 function otherpis {
   grep "pi" /etc/hosts | awk '{print $2}' | grep -v $(hostname)
 }
-
 
 function clustercmd {
   for pi in $(otherpis); do ssh $pi "$@"; done
   $@
 }
 
-
 function clustercmd-sudo {
   for pi in $(otherpis); do ssh $pi "echo pi| sudo -S  $@"; done
   echo pi| sudo -S $@
 }
 
-
 function clusterreboot {
-  clustercmd sudo shutdown -r now
+  clustercmd-sudo shutdown -r now
 }
-
 
 function clustershutdown {
-  clustercmd sudo shutdown now
+  clustercmd-sudo shutdown now
 }
-
 
 function clusterscp {
   for pi in $(otherpis); do
@@ -153,20 +148,36 @@ function clusterscp {
   done
 }
 
-
-##  path for hadoop and spark
-
-
+######  Java-Home
 export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-arm64
+
+######  hadoop 
 export HADOOP_HOME=/opt/hadoop
-export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
-
-export SPARK_HOME=/opt/spark
-export PATH=$PATH:$SPARK_HOME/bin
-
 export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
+#export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
 export LD_LIBRARY_PATH=$HADOOP_HOME/lib/native:$LD_LIBRARY_PATH
-
-
 export HADOOP_OPTS="-Djava.library.path=$HADOOP_HOME/lib/native"
+
+
+# HIVE
+export HADOOP_USER_CLASSPATH_FIRST=true
+export HIVE_HOME=/opt/hive
+export HIVE_CONF_DIR=$HIVE_HOME/conf
+#export PATH=$PATH:$HIVE_HOME/bin
+export CLASSPATH=$CLASSPATH:$HIVE_HOME/lib/*:.
+
+#### Spark
+export SPARK_HOME=/opt/spark
+
+
+export PATH=$PATH:$SPARK_HOME/bin:$HIVE_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
+
+
+
+
+
+
+
+
+
 
