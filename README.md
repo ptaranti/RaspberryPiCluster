@@ -1,7 +1,8 @@
 # RaspberryPiCluster
-Config files for a Haddop + Spark + Postgresql raspberry cluster (ubuntu 20.04)
 
-This repository contains the filesystem structure for two nodes - P1 (master) and P2 (worker)
-The only files I am going to save are the ones required for configuring the server (networking) and the servers.
+Config files for a Haddop + Spark + Hive  + Kafka + Postgresql raspberry cluster (ubuntu 20.04)
 
+The files in this repository are the ones you need to create/update in order to set up your cluster.
+
+I did it in a raspberry pi 4 4gb cluster (3 nodes), but any instalation with enough resournces should do - such as virtual machines.
 
